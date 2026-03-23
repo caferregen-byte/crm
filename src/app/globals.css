@@ -1,0 +1,178 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Apple-style tokens — light */
+:root {
+  --apple-white: #ffffff;
+  --apple-bg: #f5f5f7;
+  --apple-surface: #ffffff;
+  --apple-border: #e5e5ea;
+  --apple-blue: #007aff;
+  --apple-green: #34c759;
+  --apple-orange: #ff9f0a;
+  --apple-red: #ff3b30;
+  --foreground: #1d1d1f;
+  --muted: #6e6e73;
+  --background: var(--apple-bg);
+  --card: var(--apple-surface);
+  --apple-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --apple-ring: rgba(0, 122, 255, 0.35);
+}
+
+html.dark {
+  --apple-bg: #000000;
+  --apple-surface: #1c1c1e;
+  --apple-border: #3a3a3c;
+  --apple-blue: #0a84ff;
+  --apple-green: #30d158;
+  --apple-orange: #ff9f0a;
+  --apple-red: #ff453a;
+  --foreground: #f5f5f7;
+  --muted: #98989d;
+  --background: var(--apple-bg);
+  --card: var(--apple-surface);
+  /* Derinlik: kart sayfadan ayrışır */
+  --apple-shadow: 0 4px 24px rgba(0, 0, 0, 0.45), 0 0 0 0.5px rgba(255, 255, 255, 0.06);
+  --apple-ring: rgba(10, 132, 255, 0.45);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-apple-bg: var(--apple-bg);
+  --color-apple-surface: var(--apple-surface);
+  --color-apple-border: var(--apple-border);
+  --color-apple-blue: var(--apple-blue);
+  --color-apple-green: var(--apple-green);
+  --color-apple-orange: var(--apple-orange);
+  --color-apple-red: var(--apple-red);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  letter-spacing: -0.011em;
+}
+
+a,
+button {
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease,
+    opacity 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Kart — tek tip, hafif gölge */
+.apple-card {
+  border-radius: 16px;
+  padding: 18px;
+  background: var(--apple-surface);
+  border: 1px solid var(--apple-border);
+  box-shadow: var(--apple-shadow);
+}
+
+.apple-card.apple-card--interactive {
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.apple-card.apple-card--interactive:hover:not(:active) {
+  transform: scale(1.02);
+}
+
+.apple-card.apple-card--interactive:active {
+  transform: scale(0.98);
+}
+
+.apple-card.apple-card--flush {
+  padding: 0;
+}
+
+/* Birincil aksiyon — mavi, yuvarlak */
+.btn-apple-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.25;
+  color: #fff;
+  background: var(--apple-blue);
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.btn-apple-primary:hover:not(:active) {
+  transform: scale(1.02);
+  filter: brightness(1.06);
+}
+
+.btn-apple-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-apple-primary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--apple-ring);
+}
+
+/* İkincil — outline */
+.btn-apple-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--apple-blue);
+  background: transparent;
+  border: 1px solid var(--apple-border);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.btn-apple-secondary:hover:not(:active) {
+  transform: scale(1.02);
+  background: color-mix(in srgb, var(--apple-blue) 8%, transparent);
+}
+
+.btn-apple-secondary:active {
+  transform: scale(0.98);
+}
+
+.btn-apple-secondary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--apple-ring);
+}
+
+/* Küçük metinler — okunabilirlik */
+.text-apple-caption {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.text-apple-title {
+  font-size: clamp(1.25rem, 2.5vw, 1.375rem);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+
+/* Ana sayfa başlıkları — sakin hiyerarşi (≈18–22px) */
+.text-apple-heading {
+  font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.375rem);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.025em;
+}
