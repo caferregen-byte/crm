@@ -1,0 +1,45 @@
+{
+  "name": "closer-crm",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "postinstall": "prisma generate",
+    "dev": "next dev --webpack --port 3450",
+    "dev:host": "next dev --webpack --port 3450 --hostname 0.0.0.0",
+    "tunnel:ngrok": "ngrok http 3450",
+    "dev:turbo": "next dev --turbopack --port 3450",
+    "dev:clean": "npx --yes kill-port@2.0.1 3450 3002 || true && rm -rf .next && prisma generate && next dev --webpack --port 3450",
+    "fresh": "rm -rf .next && prisma generate",
+    "build": "prisma generate && next build",
+    "start": "next start --port 3450",
+    "lint": "eslint",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:seed": "prisma db seed"
+  },
+  "prisma": {
+    "seed": "npx tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "5.22.0",
+    "date-fns": "^4.1.0",
+    "lucide-react": "^0.577.0",
+    "next": "16.2.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.0",
+    "prisma": "5.22.0",
+    "tailwindcss": "^4",
+    "tsx": "^4.21.0",
+    "typescript": "^5"
+  }
+}
