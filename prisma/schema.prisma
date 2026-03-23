@@ -1,0 +1,130 @@
+// Closer CRM — SQLite yerel / tek dosya (Postgres’e geçerken enum+Json geri eklenebilir)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Lead {
+  id               String  @id @default(cuid())
+  wufooFormHash    String?
+  wufooEntryId     String? @unique
+  wufooFormName    String?
+
+  name      String?
+  email     String?
+  phone     String?
+  company   String?
+  instagram String?
+  country   String?
+  city      String?
+
+  /// WUFOO | INSTAGRAM_DM | WHATSAPP | MANUAL | REFERRAL | EMAIL | WEBSITE
+  source    String @default("WUFOO")
+  /// NEW_LEAD | INCOMPLETE_LEAD | COMPLETE_LEAD | QUALIFIED | UNQUALIFIED | IDEAL_CLIENT | OPPORTUNITY | FOLLOW_UP_NEEDED | LOST_FOR_NOW | LOST_FOREVER | REACTIVATION | BLACKLIST_TAG
+  leadType  String @default("NEW_LEAD")
+
+  /// Wufoo gövdesi JSON string
+  rawWufooPayload String?
+
+  /// 5 kapılı kalifikasyon (JSON string)
+  qualJson String?
+
+  completeness String @default("INCOMPLETE")
+  stage        String @default("NEW_LEAD")
+  tag          String @default("NONE")
+
+  callCount        Int       @default(0)
+  unreachableCount Int       @default(0)
+  lastCallAt       DateTime?
+  lastContactAt    DateTime?
+  nextFollowUpAt   DateTime?
+  zoomScheduledAt  DateTime?
+  seenAt           DateTime?
+
+  isBlacklisted   Boolean @default(false)
+  blacklistReason String?
+  blacklistedBy   String?
+  idealClient     Boolean @default(false)
+
+  budgetTier         Int?
+  intentScore        Int?
+  qualificationScore Int?
+  urgencyScore       Int?
+  opportunityScore   Int?
+  reactivationScore  Int?
+
+  setterNote String?
+  closerNote String?
+
+  aiSummary          String?
+  aiBudgetAnalysis   String?
+  aiRecommendedAngle String?
+  aiNextStepHint     String?
+  aiGeneratedAt      DateTime?
+
+  lostReason           String?
+  qualificationNotes   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isBlacklisted, seenAt, createdAt])
+  @@index([completeness, stage])
+  @@index([stage, nextFollowUpAt])
+  @@index([nextFollowUpAt])
+  @@index([isBlacklisted, intentScore])
+
+  notes         LeadNote[]
+  callLogs      CallLog[]
+  tasks         Task[]
+  statusHistory StatusHistory[]
+}
+
+model LeadNote {
+  id        String   @id @default(cuid())
+  leadId    String
+  lead      Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  body      String
+  category  String   @default("general")
+  createdAt DateTime @default(now())
+}
+
+model CallLog {
+  id        String   @id @default(cuid())
+  leadId    String
+  lead      Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  outcome   String
+  note      String?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
+
+model Task {
+  id          String    @id @default(cuid())
+  leadId      String
+  lead        Lead      @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  type        String    @default("CALLBACK")
+  title       String
+  dueAt       DateTime
+  completed   Boolean   @default(false)
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@index([completed, dueAt])
+}
+
+model StatusHistory {
+  id        String   @id @default(cuid())
+  leadId    String
+  lead      Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  fromStage String?
+  toStage   String
+  note      String?
+  createdAt DateTime @default(now())
+}
