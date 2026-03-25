@@ -2,7 +2,7 @@
  
 Wufoo’dan lead alan, sarı/yeşil ayıran, tam başvurularda AI özet + skor üreten ve satış pipeline’ını (kalifikasyon, Zoom, follow-up, blacklist) tek ekranda yöneten hafif CRM. **Setter-Closer prensibine göre:** Canlı Quali formu (script+cevap yan yana), Pipeline Kanban, öncelik motoru, 5 kapılı Altın Standart, blacklist, follow-up önerisi.
 
-## Özellikler
+## Özellikler 
 
 - Wufoo entegrasyonu (sarı/yeşil ayrımı) · AI analiz (özet, bütçe, intent)
 - Canlı Quali formu: Script modu / Hızlı not modu
